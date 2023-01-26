@@ -34,6 +34,7 @@ body{
     flex-direction: column;
     padding: 1.25rem;
     box-sizing: border-box;
+    z-index: 99;
 }
 
 .custom-shape-divider-top-1674637289 {
@@ -64,7 +65,7 @@ body{
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-size: 1.5vw;
+    font-size: 180%;
     font-weight: 600;
     letter-spacing: 0.125rem;
     text-transform: uppercase;
@@ -72,8 +73,15 @@ body{
 
 #loginInputs{
     display: flex;
-    height: 80%;
+    height: 90%;
     flex-direction: column;
+}
+
+#loginForm{
+    display: flex;
+    height: 90%;
+    flex-direction: column;
+
 }
 
 #loginButton{
@@ -91,17 +99,18 @@ body{
     display: flex;
     border-radius: 0.625rem;
     box-shadow: rgba(50, 50, 93, 0.25) 0rem 0.375rem 0.75rem -0.125rem, rgba(0, 0, 0, 0.3) 0rem 0.1875rem 0.4375rem -0.1875rem;
-    cursor: pointer
-}
-
-#button > p {
+    cursor: pointer;
+    text-align: center;
     margin: auto;
-    letter-spacing: 0.125rem;
+    display: block;
+    font-weight: 600;
 }
 
 #footballPlayer{
     position: absolute;
     right: 33vw;
+    z-index: 99;
+
 }
 
 #footballPlayer > img {
@@ -114,9 +123,8 @@ body{
     animation-name: animationImg;
     animation-iteration-count: infinite;
     animation-duration: 5s;
-    animation-delay: 2s;
+    animation-delay: 1s;
     animation-direction: alternate;
-
 }
 
 .loginInput{
@@ -127,7 +135,7 @@ body{
 .loginTitle{
     text-transform: uppercase;
     font-weight: 600;
-    font-size: 0.7vw;
+    font-size: 80%;
     letter-spacing: 2px;
     margin-bottom: 10px;
 }
@@ -152,7 +160,7 @@ body{
     width: 90%;
     background-color: transparent;
     border: none;
-    font-size: 0.8vw;
+    font-size: 100%;
 }
 
 .input:focus{
@@ -167,4 +175,140 @@ body{
     to {
         transform: translate(0, 1vh) rotate(-20deg);
     }
+}
+
+#wrongPassword{
+    background-color: rgb(245, 62, 49);
+    width: 20%;
+    z-index: 1;
+    border-radius: 10px;
+    position: relative;
+    top: 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0rem 0.3125rem 0.9375rem;
+
+}
+
+#wrongPassword > p {
+    color: white;
+    text-align: center;
+}
+
+#wrongPassword > p > i {
+    margin-right: 10px;
+}
+
+#mainContent{
+    background-color: #f0f0ff;
+    width: 60%;
+    height: 65%;
+    margin: 20%;
+    margin: 0% auto;
+    border-radius: 0.4125rem;
+    display: flex;
+    box-sizing: border-box;
+    z-index: 99;
+}
+
+#leftMainContent{
+    width: 25%;
+    height: 100%;
+    display: flex;
+    background: rgb(46,101,236);
+    background: linear-gradient(35deg, rgb(10, 137, 211) 0%, rgb(5, 194, 241) 35%, rgba(0,212,255,1) 100%);
+    border-radius: 0.4125rem 0 0 0.4125rem;
+    box-shadow: rgba(0, 0, 0, 0.35) 0rem 0.3125rem 0.9375rem;
+    z-index: inherit;
+    padding: 20px;
+    box-sizing: border-box;
+    flex-direction: column;
+    font-size: 100%;
+    overflow: auto;
+}
+
+#rightMainContent{
+    width: 80%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: #f0f0ff;
+    border-radius: 0 0.4125rem 0.4125rem 0;
+    box-shadow: rgba(0, 0, 0, 0.35) 0rem 0.3125rem 0.9375rem;
+}
+
+#upperLeftMainConent{
+    height: 80%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#downLeftMainContent { 
+    width: 100%;
+    height: 20%;
+    display: flex;
+    flex-direction: column;
+}
+
+.buttonLeftMainConent{
+    background-color: #0757868a;
+    width: 100%;
+    margin-bottom: 15px;
+    border-radius: 0.3125rem;
+    box-shadow: rgba(0, 0, 0, 0.35) 0rem 0.3125rem 0.9375rem;
+    padding: 10px 10px 10px 20px;
+    box-sizing: border-box;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    text-decoration: none;
+}
+
+.buttonLeftMainConent > i {
+    font-size: 100%;
+    width: 15%;
+}
+
+#centerText {
+    text-align: center;
+    background: rgb(46, 49, 236);
+    background: linear-gradient(90deg, rgb(46, 81, 236) 0%, rgb(15, 99, 255) 35%, rgb(0, 153, 255) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 100%;
+    font-weight: 600;
+    letter-spacing: 0.125rem;
+    text-transform: uppercase;
+}
+
+#centerText > h2 {
+    color: white;
+    background: none;
+    -webkit-background-clip: initial;
+    background-clip: initial;
+    -webkit-text-fill-color: initial;
+}
+
+#component {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+#titleComponent {
+    width: 100%;
+    height: 10%;
+    text-align: center;
+    background: rgb(46,101,236);
+    background: linear-gradient(35deg, rgb(10, 137, 211) 0%, rgb(5, 194, 241) 35%, rgba(0,212,255,1) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 200%;
+    font-weight: 600;
+    letter-spacing: 0.125rem;
+    text-transform: uppercase;
 }
