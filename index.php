@@ -7,23 +7,22 @@ session_start(
     ]
 );
 
+$request = $_SERVER['REQUEST_URI'];
+
 if (!isset($_SESSION['username'])) {
-    require __DIR__ . '/views/index.php';
+
+    if ($request == '/' || $request == '/index.php') {
+        require __DIR__ . '/views/index.php';
+    } else {
+        http_response_code(404);
+        require __DIR__ . '/views/404.php';
+    }
+
 } else {
-
-    $request = $_SERVER['REQUEST_URI'];
-
+ 
     if ($pos = strpos($request, '?') !== false) {
         $request = substr($request, 0, $pos);
     }
-
-    // remove trailing slash
-    if ($request != '/' && substr($request, -1) == '/') {
-        $request = substr($request, 0, -1);
-    }
-
-    
-    
 
     switch ($request) {
 

@@ -7,8 +7,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Logowanie</title>
-    <link rel="stylesheet" href="./assets/main.css">
+    <script>
+        let documentOrgin = document.location.origin;
+        document.head.innerHTML += `<link rel="stylesheet" href="${documentOrgin}/assets/main.css">`;
+    </script>
     <script src="https://use.fontawesome.com/releases/v6.2.1/js/all.js" data-auto-replace-svg="nest"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
     <div id="main">
@@ -48,7 +53,7 @@
                     <a href="index.php?page=history" class="buttonLeftMainConent"><i class="fas fa-history"></i> Historia meczy</a>
                     <a href="index.php?page=addTeam" class="buttonLeftMainConent"><i class="fas fa-plus"></i> Dodaj drużynę</a>
                     <a href="index.php?page=editTeam" class="buttonLeftMainConent"><i class="fas fa-edit"></i> Edytuj drużynę</a>
-                    <a href="index.php?page=addUser" class="buttonLeftMainConent"><i class="fas fa-user-plus"></i> Dodaj Użytkownika</a>
+                    <a href="index.php?page=menageUsers" class="buttonLeftMainConent"><i class="fas fa-users"></i> Zarządzanie Kontami</a>
                 </div>
                 <div id="downLeftMainContent">
                     <a href="index.php?page=showMatch" class="buttonLeftMainConent"><i class="fas fa-trophy"></i>Wyświetl Mecz</a>
@@ -57,7 +62,9 @@
             </div>
             <div id="rightMainContent">
                 <?php 
+
                     if(isset($_GET['page'])) { 
+
                         if($_GET['page'] == 'logout') {
                             header('Location: logout');
                         }
@@ -105,5 +112,15 @@
         </div>
         <?php endif ?>
     </div>
+    <script>
+        const footballPlayer = document.getElementById('footballPlayer');
+        if(footballPlayer != null) {
+            const img = footballPlayer.children[0];
+            img.src = documentOrgin + '/assets/Football_player.png '
+        }
+    </script>
+    <?php 
+        $con->close();
+    ?>
 </body>
 </html>
