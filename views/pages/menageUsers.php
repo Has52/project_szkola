@@ -114,7 +114,7 @@
             cancelButtonText: 'Anuluj'
         }).then((result) => {
             if(result.isConfirmed) {
-                $.post('removeAccount', {
+                $.post('/api/removeAccount.php', {
                     id: id
                 }, (data) => {
                     if(data == 'success') {
