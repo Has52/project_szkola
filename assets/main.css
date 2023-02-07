@@ -380,6 +380,18 @@ body{
     background-color: #1997ffa1;
 }
 
+#mainHomeTitle{
+    background: rgb(46,101,236);
+    background: linear-gradient(35deg, rgb(10, 137, 211) 0%, rgb(5, 194, 241) 35%, rgba(0,212,255,1) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 200%;
+    font-weight: 600;
+    letter-spacing: 0.125rem;
+    text-align: center;
+}
+
 ::-webkit-scrollbar {
     width: 1.25rem
 }

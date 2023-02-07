@@ -7,10 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Logowanie</title>
-    <script>
-        let documentOrgin = document.location.origin;
-        document.head.innerHTML += `<link rel="stylesheet" href="${documentOrgin}/assets/main.css">`;
-    </script>
+    <?php
+        echo('<link rel="stylesheet" href="'.$path.'/assets/main.css">');
+    ?>
     <script src="https://use.fontawesome.com/releases/v6.2.1/js/all.js" data-auto-replace-svg="nest"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -25,16 +24,13 @@
             </svg>
         </div>
         <?php
-            $con = new mysqli("localhost","root","","mecze");
-
             if (isset($_POST['username']) && isset($_POST['password'])) {
                 $username = mysqli_real_escape_string($con, $_POST['username']);
                 $password = mysqli_real_escape_string($con, $_POST['password']);
-                // skrypt bazy danych do sprawdzania prawidłowości nazwy użytkownika i hasła
                 $result = mysqli_query($con, "SELECT * FROM users WHERE login='$username' AND password=SHA1('$password')");
                 if (mysqli_num_rows($result) == 1) {
                     $_SESSION['username'] = $username;
-                    header('Location: index.php');
+                    header('Location: '.$path);
                 } else {
                     echo '<div id="wrongPassword"><p><i class="fa-solid fa-circle-xmark"></i>Nieprawidłowa nazwa użytkownika lub hasło</p></div>';
                 }
@@ -119,8 +115,5 @@
             img.src = documentOrgin + '/assets/Football_player.png '
         }
     </script>
-    <?php 
-        $con->close();
-    ?>
 </body>
 </html>

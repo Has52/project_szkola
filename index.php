@@ -8,10 +8,12 @@ session_start(
 );
 
 $request = $_SERVER['REQUEST_URI'];
+$path = '/BartosikK/Projekt/';
+$con = new mysqli("localhost","root","","mecze");
 
 if (!isset($_SESSION['username'])) {
 
-    if ($request == '/' || $request == '/index.php') {
+    if ($request == $path  . '/' || $request == $path || $request == $path  . 'index.php') {
         require __DIR__ . '/views/index.php';
     } else {
         http_response_code(404);
@@ -24,18 +26,25 @@ if (!isset($_SESSION['username'])) {
         $request = substr($request, 0, $pos);
     }
 
+
+    if (dirname($request) == $path . 'api') {
+        require $_SERVER['DOCUMENT_ROOT'] . $request;
+        return;
+    }
+
     switch ($request) {
 
-        case '':
         case '/':
+        case $path . '':
+        case $path . '/':
             require __DIR__ . '/views/index.php';
             break;
         
-        case '/index.php':
+        case $path . 'index.php':
             require __DIR__ . '/views/index.php';
             break;
 
-        case '/logout':
+        case $path . 'logout':
             require __DIR__ . '/views/logout.php';
             break;
 
@@ -47,5 +56,6 @@ if (!isset($_SESSION['username'])) {
 
 }
 
+        $con->close();
 
 ?>

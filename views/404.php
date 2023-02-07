@@ -7,10 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Logowanie</title>
-    <script>
-        let documentOrgin = document.location.origin;
-        document.head.innerHTML += `<link rel="stylesheet" href="${documentOrgin}/assets/main.css">`;
-    </script>
+    <?php
+        echo('<link rel="stylesheet" href="'.$path.'/assets/main.css">');
+    ?>
     <script src="https://use.fontawesome.com/releases/v6.2.1/js/all.js" data-auto-replace-svg="nest"></script>
 </head>
 <body>

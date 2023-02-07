@@ -8,7 +8,7 @@
     <div id="contenerContent">
         <div id="tableMenageUsers">
             <div class="column">
-                <div class="row">Id</div>
+                <div class="row">ID</div>
                 <div class="row">Nazwa Użytkownika</div>
                 <div class="row">Data utworzenia</div>
                 <div class="row">Ostatnia Zmiana</div>
@@ -22,7 +22,7 @@
                     echo '<div class="row">'.$row['login'].'</div>';
                     echo '<div class="row">'.$row['createdAt'].'</div>';
                     echo '<div class="row">'.$row['updatedAt'].'</div>';
-                    echo '<div class="row"> <span onclick="removeAccount('.$row['id'].')"> <i class="fa-solid fa-trash"></i></span> <span onclick="editAccount('.$row['id'].')"><i class="fa-solid fa-user-pen"></i></span> </div>';
+                    echo '<div class="row"> <span onclick="removeAccount('.$row['id'].')"> <i class="fa-solid fa-trash"></i></span> <span onclick="editAccount('.$row['id'].', '.$row['login'].')"><i class="fa-solid fa-user-pen"></i></span> </div>';
                     echo '</div>';
                 }
             ?>
@@ -76,10 +76,11 @@
                         'error'
                     )
                 } else {
-                    $.post('createAccount', {
+                    $.post('./api/createAccount.php', {
                         login: result.value[0],
                         password: result.value[1]
                     }, (data) => {
+                        console.log(data);
                         if(data == 'success') {
                             Swal.fire(
                                 'Dodano konto!',
@@ -114,7 +115,7 @@
             cancelButtonText: 'Anuluj'
         }).then((result) => {
             if(result.isConfirmed) {
-                $.post('/api/removeAccount.php', {
+                $.post('./api/removeAccount.php', {
                     id: id
                 }, (data) => {
                     if(data == 'success') {
@@ -137,11 +138,12 @@
         })
     }
 
-    let editAccount = (id) => {
+    let editAccount = (id, login) => {
         Swal.fire({
             title: 'Edytuj konto',
-            html: '<input id="swal-input1" class="swal2-input" placeholder="Login">' +
-                '<input id="swal-input2" class="swal2-input" placeholder="Hasło">',
+            html: '<input id="swal-input1" class="swal2-input" placeholder="Login" value='+login+'>' +
+                '<input id="swal-input2" class="swal2-input" placeholder="Hasło">' +
+                '<input id="swal-input3" class="swal2-input" placeholder="Powtórz hasło">',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
@@ -150,32 +152,60 @@
             preConfirm: () => {
                 return [
                     document.getElementById('swal-input1').value,
-                    document.getElementById('swal-input2').value
+                    document.getElementById('swal-input2').value,
+                    document.getElementById('swal-input3').value
                 ]
             }
         }).then((result) => {
+            console.log(result.value)
             if(result.isConfirmed) {
-                $.post('editAccount', {
-                    id: id,
-                    login: result.value[0] == '' ? null : result.value[0],
-                    password: result.value[1] == '' ? null : result.value[1]
-                }, (data) => {
-                    if(data == 'success') {
-                        Swal.fire(
-                            'Edytowano konto!',
-                            'Konto zostało edytowane.',
-                            'success'
-                        ).then(() => {
-                            location.reload();
-                        })
-                    } else {
-                        Swal.fire(
-                            'Błąd!',
-                            'Coś poszło nie tak, spróbuj ponownie.',
-                            'error'
-                        )
-                    }
-                })
+                if(result.value[0] == '') {
+                    Swal.fire(
+                        'Błąd!',
+                        'Login nie może być pusty.',
+                        'error'
+                    )
+                } else if(result.value[1] == '' || result.value[2] == '') {
+                    Swal.fire(
+                        'Błąd!',
+                        'Hasło nie może być puste.',
+                        'error'
+                    )
+                } else if(result.value[1].length < 6) {
+                    Swal.fire(
+                        'Błąd!',
+                        'Hasło musi mieć conajmniej 6 znaków.',
+                        'error'
+                    )
+                } else if(result.value[1] != result.value[2]) {
+                    Swal.fire(
+                        'Błąd!',
+                        'Hasła nie są takie same.',
+                        'error'
+                    )
+                } else {
+                    $.post('./api/editAccount.php', {
+                        id: id,
+                        login: result.value[0] == '' ? null : result.value[0],
+                        password: result.value[1] == '' ? null : result.value[1]
+                    }, (data) => {
+                        if(data == 'success') {
+                            Swal.fire(
+                                'Edytowano konto!',
+                                'Konto zostało edytowane.',
+                                'success'
+                            ).then(() => {
+                                location.reload();
+                            })
+                        } else {
+                            Swal.fire(
+                                'Błąd!',
+                                'Coś poszło nie tak, spróbuj ponownie.',
+                                'error'
+                            )
+                        }
+                    })
+                }
             }
         })
     }
