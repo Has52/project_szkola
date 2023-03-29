@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mecz</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         @font-face {
             font-family: San Francisco;
@@ -84,23 +85,28 @@
         }
 
         .playersPoint{
-            display: flex;
+            display: block;
             letter-spacing: 0;
-            flex-direction: column;
-            width: 100%;
             margin-top: 5px;
-        }
-
-        .playersPoint1 > div {
-            text-align: left;
-        }
-
-        .playersPoint2 > div{
-            text-align: right;
+            width: 100%;
+            height: calc(100%/3);
         }
         
-        .playersPoint1 > div, .playersPoint2 > div{
-            margin-top: 10px;
+        .playersPoint1 > span, .playersPoint2 > span{
+            margin-right: 5px;
+            padding: 3px;
+            font-size: 0.9vw;
+        }
+
+        #gameTime{
+            position: fixed;
+            font-size: 3vw;
+            top: 20%;
+        }
+
+        .logoTeam{
+            width: 100%;
+            height: 100%;
         }
         
     </style>
@@ -111,32 +117,99 @@
             <div class="matchLeftRight">
                 <div class="infoTeam">
                     <div class="logoTeam">
-                        <img src="./assets/testTeamLogo.png" alt="logo">
+                        <img src="" alt="logo" id='leftLogo'>
                     </div>
-                    <div class="nameTeam">TESTOWA NAZWA</div>
-                    <div class="playersPoint playersPoint1">
-                        <div>Testowy Player 67'</div>
-                        <div>Testowy Player 67'</div>
-
+                    <div class="nameTeam" id='leftName'></div>
+                    <div class="playersPoint playersPoint1" id='leftPlayers'>
+                        <!-- <div>Testowy Player 67'</div> -->
+                        <!-- <div>Testowy Player 67'</div> -->
                     </div>
                 </div>
-                <div class="points">0</div>
+                <div class="points" id='leftPoints'>0</div>
             </div>
-            <div class="top">-</div>
+            <div class="top">
+                <div>-</div>
+                <div id="gameTime"></div>
+            </div>
             <div class="matchLeftRight">
-                <div class="points">0</div>
+                <div class="points" id='rightPoints'>0</div>
                 <div class="infoTeam">
                     <div class="logoTeam">
-                        <img src="./assets/testTeamLogo.png" alt="logo">
+                        <img src="" alt="logo" id='rightLogo'>
                     </div>
-                    <div class="nameTeam">TESTOWA NAZWA</div>
-                    <div class="playersPoint playersPoint2">
-                        <div>Testowy Player 67'</div>
-                        <div>Testowy Player 67'</div>
+                    <div class="nameTeam" id='rightName'></div>
+                    <div class="playersPoint playersPoint2" id='rightPlayers'>
+                        <!-- <div>Testowy Player 67',</div> -->
+                        <!-- <div>Testowy Player 67'</div> -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        let leftPlayers = document.getElementById('leftPlayers')
+        let rightPlayers = document.getElementById('rightPlayers')
+        let startTime = 0;
+        let endTime = 0;
+
+        let updateTime = () => {
+            const now = Math.floor(Date.now() / 1000);
+            const elapsedSeconds = now - startTime;
+            const elapsedMinutes = Math.floor(elapsedSeconds / 60);
+            const elapsedSecondsInMinute = elapsedSeconds % 60;
+
+            if(endTime < now || (startTime == 0 && endTime == 0)) {
+                document.getElementById('gameTime').innerHTML = startTime == 0 ? `Ładowanie...` : 'KONIEC'
+                return
+            };
+
+            let minutes = elapsedMinutes <= 9 ? `0${elapsedMinutes}` : elapsedMinutes
+            let seconds = elapsedSecondsInMinute <= 9 ? `0${elapsedSecondsInMinute}` : elapsedSecondsInMinute
+
+            document.getElementById('gameTime').innerHTML = `${minutes}:${seconds}`
+        }
+        
+
+        let updateMatch = () => {
+            $.ajax({
+				type: 'POST',
+				url: './api/match.php',
+				success: function(data) {
+                    // console.log(data);
+                    data = JSON.parse(data);
+                    $('#rightPoints').text(data.right.points);
+                    $('#leftPoints').text(data.left.points);
+                    $('#rightName').text(data.right.name);
+                    $('#leftName').text(data.left.name);
+                    $('#leftLogo').attr("src", data.left.logo);
+                    $('#rightLogo').attr("src", data.right.logo);
+
+                    leftPlayers.innerHTML = '';
+                    rightPlayers.innerHTML = '';
+
+                    Object.entries(data.left.players).forEach(element => {
+                        let elementDiv = document.createElement('span');
+                        elementDiv.innerText = element[1] + ',';
+                        leftPlayers.appendChild(elementDiv)
+                    });
+
+                    Object.entries(data.right.players).forEach(element => {
+                        let elementDiv = document.createElement('span');
+                        elementDiv.innerText = element[1] + ',';
+                        rightPlayers.appendChild(elementDiv)
+                    });
+
+                    startTime = data.startGame;
+                    endTime = data.endGame;
+				},
+				error: function(xhr, status, error) {
+					console.log(error);
+				}
+			});
+        }
+
+        setInterval(updateMatch, 1000);
+        setInterval(updateTime, 1000);
+    </script>
 </body>
 </html>

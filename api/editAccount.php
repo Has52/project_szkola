@@ -16,11 +16,12 @@
         }
 
         $con = new mysqli("localhost","root","","mecze");
+        mysqli_set_charset($con, "UTF8");
         $id = mysqli_real_escape_string($con, $id);
         $login = mysqli_real_escape_string($con, $login);
         $password = mysqli_real_escape_string($con, $password);
 
-        $sql = "UPDATE users SET login='".$login."', password='".$password."' WHERE id=".$id."";
+        $sql = "UPDATE users SET login='".$login."', password=SHA1('".$password."') WHERE id=".$id."";
 
         $result = mysqli_query($con, $sql);
 

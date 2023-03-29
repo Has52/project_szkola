@@ -313,7 +313,7 @@ body{
     text-transform: uppercase;
 }
 
-#contenerContent{
+#contenerContent, #contenerContentTeamForm{
     width: 100%;
     height: 90%;
     display: flex;
@@ -341,6 +341,18 @@ body{
     color: white;
     border-radius: 10px;
     cursor: pointer;
+}
+
+#buttonSticky2{
+    position: fixed;
+    left: 35vw;
+    padding: 10px;
+    background: rgba(46, 49, 236, 0.863);
+    background: linear-gradient(90deg, rgb(46, 81, 236) 0%, rgb(15, 99, 255) 35%, rgb(0, 153, 255) 100%);
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    z-index: 999999999999999999;
 }
 
 .column{
@@ -420,6 +432,7 @@ body{
     display: flex;
     text-decoration: none;
     align-items: center;
+    justify-content: center;
     text-align: center;
     margin: 10px;
 }
@@ -441,4 +454,225 @@ body{
 
 ::-webkit-scrollbar-thumb:hover {
     background-color: #a8bbbf
+}
+
+.leftContentContener, .rightContentContener{
+    display: flex;
+    width: 50%;
+    height: 100%;
+    flex-direction: column;
+}
+
+.nameTeamContent{
+    display: flex;
+    width: 100%;
+    height: 30%;
+    flex-direction: column;
+
+}
+
+.addPlayerContent{
+    display: flex;
+    width: 100%;
+    height: 80%;
+    flex-direction: column;
+}
+
+.contentBox{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 35vh;
+    max-height: 35vh;
+    box-sizing: border-box;
+}
+
+.contentTitle{
+    font-size: 0.8vw;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    background: rgb(46,101,236);
+    background: linear-gradient(35deg, rgb(10, 137, 211) 0%, rgb(5, 194, 241) 35%, rgba(0,212,255,1) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 600;
+    margin-bottom: 0.5vh;
+    height: 2vh;
+}
+
+.contentInput{
+    height: 95%;
+    max-height: 95%;
+    overflow: auto;
+}
+
+.contentInput > input {
+    background: rgb(46,101,236);
+    background: linear-gradient(35deg, rgb(10, 137, 211) 0%, rgb(5, 194, 241) 35%, rgba(0,212,255,1) 100%);
+    color: white;
+    border: none;
+    border-radius: 0.2vw;
+    padding: 0.5vw;
+    letter-spacing: 1.5px;
+    font-size: 0.8vw;
+    width: 12vw;
+}
+
+.contentInput > input:focus{
+    outline: none;
+}
+
+.contentInput > input::placeholder{
+    color: white;
+    opacity: 0.7;
+}
+
+.classPlayer{
+    display: flex;
+    width: 15vw;
+    height: 2vh;
+    position: relative;
+    background: rgb(46,101,236);
+    background: linear-gradient(35deg, rgb(10, 137, 211) 0%, rgb(5, 194, 241) 35%, rgba(0,212,255,1) 100%);
+    padding: 0.5vw;
+    margin-bottom: 0.5vh;
+    border-radius: 0.2vw;
+}
+
+.namePlayer{
+    width: 100%;
+    color: white;
+    letter-spacing: 1.3px;
+    font-size: 0.8vw;
+}
+
+.playerX{
+    position: absolute;
+    right: 0.5vw;
+    color: white;
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+.classPlayer > input[type="text"] {
+    background-color: transparent;
+    width: 100%;
+    height: 100%;
+    color: white;
+    border: none;
+    position: relative;
+    letter-spacing: 1.3px;
+    font-size: 0.8vw;
+}
+
+.contentInput > input:focus{
+    outline: none;
+    border: none;
+}
+
+.contentInput > input::placeholder{
+    color: white;
+    opacity: 0.7;
+}
+
+
+#plusNewPlayer{
+    text-align: center;
+    cursor: pointer;
+}
+
+.contentRight{
+    width: 100%;
+    height: 50%;
+    display: flex;
+    box-sizing: border-box;
+}
+
+
+/* 
+CodePen
+Simple Drag and Drop File Upload Tutorial - HTML, CSS & JavaScript
+*/
+
+.drop-zone {
+    width: 100%;
+    height: 100%;
+    padding: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: "Quicksand", sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    cursor: pointer;
+    color: #cccccc;
+    border: 4px dashed rgb(46, 198, 236);
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+  
+.drop-zone--over {
+    border-style: solid;
+}
+  
+.drop-zone__input {
+    display: none;
+}
+  
+.drop-zone__thumb {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #cccccc;
+    background-size: cover;
+    position: relative;
+    background-position: center;
+}
+  
+.drop-zone__thumb::after {
+    content: attr(data-label);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 5px 0;
+    color: #ffffff;
+    background: rgba(0, 0, 0, 0.75);
+    font-size: 14px;
+    text-align: center;
+}
+
+/* end */
+  
+.buttonCreateTeam{
+    width: 17vw;
+    height: 5vh;
+    position: relative;
+    background: rgb(46,101,236);
+    background: linear-gradient(35deg, rgb(10, 137, 211) 0%, rgb(5, 194, 241) 35%, rgba(0,212,255,1) 100%);
+    padding: 0.5vw;
+    margin-bottom: 0.5vh;
+    border-radius: 0.2vw;
+    color: white;
+    margin: auto;
+    cursor: pointer;
+    border: none;
+    text-align: center;
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    font-size: 0.8vw;
+}
+
+.classPlayer > input:focus{
+    outline: none;
+}
+
+.classPlayer > input::placeholder{
+    color: white;
+    opacity: 0.7;
 }

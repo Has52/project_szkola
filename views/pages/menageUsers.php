@@ -31,6 +31,7 @@
 </div>
 
 <script>
+
     let createAccount = () => {
         Swal.fire({
             title: 'Dodaj konto',

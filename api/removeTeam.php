@@ -17,9 +17,10 @@
         mysqli_set_charset($con, "UTF8");
         $id = mysqli_real_escape_string($con, $id);
 
-        $sql = "DELETE FROM users WHERE id = '$id'";
-        $result = mysqli_query($con, $sql);
-        if($result){
+        $result = mysqli_query($con, "DELETE FROM teams WHERE id = '$id'");
+        $result2 = mysqli_query($con, "DELETE FROM players WHERE playerTeamId = '$id'");
+
+        if($result && $result2){
             echo 'success';
         } else {
             echo 'error';

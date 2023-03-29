@@ -15,6 +15,7 @@
         }
 
         $con = new mysqli("localhost","root","","mecze");
+        mysqli_set_charset($con, "UTF8");
         $login = mysqli_real_escape_string($con, $login);
         $password = mysqli_real_escape_string($con, $password);
 
