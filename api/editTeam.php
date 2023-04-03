@@ -19,19 +19,14 @@
         $con = new mysqli("localhost","root","","mecze");
         mysqli_set_charset($con, "UTF8");
 
-        // teams table
-        // teamName, teamLogo
         $sql = "UPDATE teams SET teamName = '$teamName', teamLogo = '$logo' WHERE id = $id";
-
         if(!mysqli_query($con, $sql)){
             echo 'error';
             return;
         }
 
-        // players table
-        // playerTeamId, playerName
         foreach($players as $player){
-            $sql = "UPDATE players SET playerName = '$player' WHERE playerTeamId = $id";
+            $sql = "UPDATE players SET playerName = '".$player['playerName']."', playerTeamId = '".$player['playerTeamId']."'  WHERE id = ".$player['playerId'].";";
 
             if(!mysqli_query($con, $sql)){
                 echo 'error';

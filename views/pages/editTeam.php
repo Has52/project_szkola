@@ -43,9 +43,9 @@
                         <div class="rowPlayersTeam">Id Drużyny</div>
                     </div>
                     <div class="columnPlayersTeam">
-                        <div class="rowPlayersTeam">${players[i].id}</div>
-                        <input type="text" value="${players[i].playerName}">
-                        <input type="text" value="${players[i].playerTeamId}">
+                        <div class="rowPlayersTeam" name='playerId'>${players[i].id}</div>
+                        <input type="text" name='playerName' required value="${players[i].playerName}">
+                        <input type="number" name='playerTeamId' required value="${players[i].playerTeamId}">
                     </div>
                 </div>
             `;
@@ -81,9 +81,21 @@
                 let logo = document.querySelectorAll('.swal2-html-container input')[0].value;
                 let teamName = document.querySelectorAll('.swal2-html-container input')[1].value;
                 let players = [];
-                let inputs = document.querySelectorAll('.swal2-html-container input');
-                for(let i = 2; i < inputs.length; i++) {
-                    players.push(inputs[i].value);
+                let inputs = document.querySelectorAll('.swal2-html-container .rowPlayersTeam');
+                for(let i = 0; i <= inputs.length; i+=5){
+                    if(i >= 1) {
+                        if(inputs[i] !== undefined){
+                            let elementColumn = inputs[i].querySelectorAll('.columnPlayersTeam')[1]
+                            let playerId = elementColumn.childNodes[1].innerText;
+                            let name = elementColumn.childNodes[3].value;
+                            let teamId = elementColumn.childNodes[5].value;
+                            players.push({
+                                playerId: playerId,
+                                playerName: name,
+                                playerTeamId: teamId,
+                            })
+                        }
+                    }
                 }
 
                 $.post('./api/editTeam.php', {

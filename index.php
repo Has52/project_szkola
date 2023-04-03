@@ -8,7 +8,7 @@ session_start(
 );
 
 $request = $_SERVER['REQUEST_URI'];
-$path = '/project_szkola/';
+$path = '/BartosikK/Projekt/';
 $con = new mysqli("localhost","root","","mecze");
 mysqli_set_charset($con, "UTF8");
 
