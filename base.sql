@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 27 Mar 2023, 12:37
--- Wersja serwera: 10.1.38-MariaDB
--- Wersja PHP: 7.3.2
+-- Czas generowania: 14 Maj 2023, 23:48
+-- Wersja serwera: 10.4.27-MariaDB
+-- Wersja PHP: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -32,11 +31,18 @@ CREATE TABLE `games` (
   `id` int(11) NOT NULL,
   `firstTeamId` int(11) NOT NULL,
   `secondTeamId` int(11) NOT NULL,
-  `start` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `end` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `start` timestamp NOT NULL DEFAULT current_timestamp(),
+  `end` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updatedAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `createdAt` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Zrzut danych tabeli `games`
+--
+
+INSERT INTO `games` (`id`, `firstTeamId`, `secondTeamId`, `start`, `end`, `updatedAt`, `createdAt`) VALUES
+(2, 1, 2, '2023-05-14 21:41:00', '2023-05-14 21:45:00', '2023-05-14 21:41:15', '2023-05-14 21:41:15');
 
 -- --------------------------------------------------------
 
@@ -47,11 +53,19 @@ CREATE TABLE `games` (
 CREATE TABLE `goals` (
   `id` int(11) NOT NULL,
   `gameId` int(11) NOT NULL,
-  `player` text NOT NULL,
-  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `teamId` int(11) NOT NULL,
+  `playerId` int(11) NOT NULL,
+  `time` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updatedAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `createdAt` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Zrzut danych tabeli `goals`
+--
+
+INSERT INTO `goals` (`id`, `gameId`, `teamId`, `playerId`, `time`, `updatedAt`, `createdAt`) VALUES
+(6, 2, 2, 5, '2023-05-14 21:45:13', '0000-00-00 00:00:00', '2023-05-14 21:45:13');
 
 -- --------------------------------------------------------
 
@@ -63,9 +77,20 @@ CREATE TABLE `players` (
   `id` int(11) NOT NULL,
   `playerName` text NOT NULL,
   `playerTeamId` int(11) NOT NULL,
-  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `updatedAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `createdAt` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Zrzut danych tabeli `players`
+--
+
+INSERT INTO `players` (`id`, `playerName`, `playerTeamId`, `updatedAt`, `createdAt`) VALUES
+(1, 'gracz1 1', 1, '2023-05-14 21:47:54', '2023-05-14 12:53:03'),
+(2, 'gracz1 2', 1, '2023-05-14 21:47:54', '2023-05-14 12:53:03'),
+(3, 'gracz2 1', 2, '2023-05-14 21:48:01', '2023-05-14 12:53:25'),
+(4, 'gracz2 2', 2, '2023-05-14 21:48:01', '2023-05-14 12:53:25'),
+(5, 'gracz2 3', 2, '2023-05-14 21:48:01', '2023-05-14 12:53:25');
 
 -- --------------------------------------------------------
 
@@ -77,10 +102,18 @@ CREATE TABLE `teams` (
   `id` int(11) NOT NULL,
   `teamName` text NOT NULL,
   `teamLogo` text NOT NULL,
-  `points` int(11) NOT NULL DEFAULT '0',
-  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `points` int(11) NOT NULL DEFAULT 0,
+  `updatedAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `createdAt` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Zrzut danych tabeli `teams`
+--
+
+INSERT INTO `teams` (`id`, `teamName`, `teamLogo`, `points`, `updatedAt`, `createdAt`) VALUES
+(1, 'Testowa druzyna 1', '4x.png', 0, '2023-05-14 12:53:03', '2023-05-14 12:53:03'),
+(2, 'Testowa druzyna 2', 'mucka.png', 0, '2023-05-14 12:53:25', '2023-05-14 12:53:25');
 
 -- --------------------------------------------------------
 
@@ -92,9 +125,9 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `login` text NOT NULL,
   `password` text NOT NULL,
-  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `updatedAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `createdAt` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Zrzut danych tabeli `users`
@@ -140,32 +173,32 @@ ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT dla zrzuconych tabel
 --
 
 --
 -- AUTO_INCREMENT dla tabeli `games`
 --
 ALTER TABLE `games`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT dla tabeli `goals`
 --
 ALTER TABLE `goals`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT dla tabeli `players`
 --
 ALTER TABLE `players`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT dla tabeli `teams`
 --
 ALTER TABLE `teams`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT dla tabeli `users`

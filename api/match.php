@@ -72,9 +72,7 @@
         
             $matchData -> left -> players = new stdClass();
             $matchData -> right -> players = new stdClass();
-    
-            // $matchData -> left -> players -> {1} = "Test Lewo 1";
-            // $matchData -> left -> players -> {2} = "Test Lewo 2";
+
 
             $dataPlayersTeam1 = $con->query('SELECT players.playerName FROM players RIGHT JOIN goals ON goals.playerId = players.id WHERE goals.gameId = '.$row['id'].' AND goals.teamId = '.$row['home_team_id'].' GROUP BY players.id;'); 
             $dataPlayersTeam2 = $con->query('SELECT players.playerName FROM players RIGHT JOIN goals ON goals.playerId = players.id WHERE goals.gameId = '.$row['id'].' AND goals.teamId = '.$row['away_team_id'].' GROUP BY players.id;');

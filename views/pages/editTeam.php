@@ -21,7 +21,6 @@
                     echo '<div class="row">'.$row['teamName'].'</div>';
                     echo '<div class="row cursor" onclick="openImage(`'.$row['teamLogo'].'`, `'.$row['teamName'].'`)">'.$row['teamLogo'].'</div>';
                     echo '<div class="row">'.$row['updatedAt'].'</div>';
-                    // echo '<div class="row"> <span onclick="removeAccount('.$row['id'].')"> <i class="fa-solid fa-trash"></i></span> <span onclick="editTeam('.$row['id'].')"><i class="fa-solid fa-user-pen"></i></span> </div>';
                     echo '<div class="row"> <span onclick="removeAccount('.$row['id'].')"> <i class="fa-solid fa-trash"></i></span> <span onclick="editTeam(`'.$row['id'].'`, `'.$row['teamLogo'].'`, `'.$row['teamName'].'`, '.$players.')"><i class="fa-solid fa-user-pen"></i></span> </div>';
                     echo '</div>';
                 }
