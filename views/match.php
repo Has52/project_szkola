@@ -153,6 +153,8 @@
         let endTime = 0;
 
         let updateTime = () => {
+            startTime = Math.floor(Date.parse(startTime) / 1000);
+            endTime = Math.floor(Date.parse(endTime) / 1000);
             const now = Math.floor(Date.now() / 1000);
             const elapsedSeconds = now - startTime;
             const elapsedMinutes = Math.floor(elapsedSeconds / 60);
@@ -175,7 +177,6 @@
 				type: 'POST',
 				url: './api/match.php',
 				success: function(data) {
-                    // console.log(data);
                     data = JSON.parse(data);
                     $('#rightPoints').text(data.right.points);
                     $('#leftPoints').text(data.left.points);
@@ -210,6 +211,7 @@
 
         setInterval(updateMatch, 1000);
         setInterval(updateTime, 1000);
+        // todo - wiecej czasu na update z bazy
     </script>
 </body>
 </html>
