@@ -26,7 +26,7 @@
             </div>
         </div>
         <div id="leftContent">
-            <div id="button" style='right: auto; padding: 10px 20px;'>Stwórz mecz</div>
+            <div id="button" style='right: auto; padding: 10px 20px;' onclick='createMetch()'>Stwórz mecz</div>
         </div>
     </div>
 </div>
@@ -84,7 +84,7 @@
     }
 
     .selectMenu select {
-        width: 30%;
+        width: 50%;
     }
 
     .logoLr img {
@@ -121,6 +121,13 @@
         option.innerText = element.teamName;
         option.dataset.teamLogo = element.teamLogo;
 
+        if(i == 0){
+            option.selected = true;
+            let teamLogo1 = document.getElementById('teamLogo1');
+            let logo = option.dataset.teamLogo;
+            teamLogo1.src = `./images/${logo}`;
+        }
+
         team1.appendChild(option);
         team2.appendChild(option.cloneNode(true));
     });
@@ -138,5 +145,70 @@
         let logo = objectTarget[e.target.options.selectedIndex].dataset.teamLogo;
         teamLogo2.src = `./images/${logo}`;
     })
+
+    let createMetch = () => {
+        let time = new Date();
+        let year = time.getFullYear();
+        let month = time.getMonth() + 1;
+        let day = time.getDate();
+        let hour = time.getHours();
+        let minutes = time.getMinutes();
+        let seconds = time.getSeconds();
+        // let date = `${year}-${month}-${day}T${hour}:${minutes}:${seconds}`;
+        let date = `${year}-${month}-${day}T${hour}:${minutes}`;
+
+        Swal.fire({
+            title: 'Wybierz datę rozpoczęcia meczu i zakończenia meczu',
+            // html: `<input type="datetime-local" id="startMatch" name="startMatch" value="${date}" min="${date}"> <br> <input type="datetime-local" id="endMatch" name="endMatch" value="${date}" min="${date}">`, // only hour and minutes
+            // only hour and minutes
+            html: `<input type="datetime-local" id="startMatch" name="startMatch" value="${date}" min="${date}"> <br> <input type="datetime-local" id="endMatch" name="endMatch" value="${date}" min="${date}">`,
+            confirmButtonText: 'Stwórz mecz',
+            showCancelButton: true,
+            cancelButtonText: 'Anuluj',
+            preConfirm: () => {
+                let startMatch = document.getElementById('startMatch').value;
+                let endMatch = document.getElementById('endMatch').value;
+                let team1 = document.getElementById('team1').value;
+                let team2 = document.getElementById('team2').value;
+
+                if(startMatch == '' || endMatch == '' || team1 == '' || team2 == ''){
+                    Swal.showValidationMessage('Wypełnij wszystkie pola');
+                }else{
+                    return {startMatch: startMatch, endMatch: endMatch, team1: team1, team2: team2};
+                }
+            }
+        }).then((result) => {
+            if(result.isConfirmed){
+                let startMatch = result.value.startMatch;
+                let endMatch = result.value.endMatch;
+                let team1 = result.value.team1;
+                let team2 = result.value.team2;
+
+                $.ajax({
+                    url: './api/createMatch.php',
+                    type: 'POST',
+                    data: {startMatch: startMatch, endMatch: endMatch, team1: team1, team2: team2},
+                    success: (data) => {
+                        if(data == 'success'){
+                            Swal.fire({
+                                title: 'Mecz został stworzony',
+                                icon: 'success',
+                                confirmButtonText: 'Ok'
+                            }).then(() => {
+                                location.reload();
+                            })
+                        }else{
+                            console.log(data);
+                            Swal.fire({
+                                title: 'Wystąpił błąd',
+                                icon: 'error',
+                                confirmButtonText: 'Ok'
+                            })
+                        }
+                    }
+                })
+            }
+        })
+    }
 
 </script>

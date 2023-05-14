@@ -321,7 +321,7 @@ body{
     overflow: auto;
 }
 
-#tableMenageUsers{
+#tableMenageUsers, #tableMenageHistoryMatch{
     width: 90%;
     height: 90%;
     overflow: auto;
