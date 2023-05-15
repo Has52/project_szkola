@@ -25,7 +25,9 @@
         $match_id = mysqli_real_escape_string($con, $match_id);
         $team_id = mysqli_real_escape_string($con, $team_id);
 
-        $con->query("INSERT INTO goals VALUES (NULL, $match_id, $team_id, $player_id, NULL, $points, NULL)");
+        for($i = 0; $i < $points; $i++){
+            $con->query("INSERT INTO goals VALUES (NULL, $match_id, $team_id, $player_id, NULL, 1, NULL)");
+        }
 
         echo 'success';
 
